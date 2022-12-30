@@ -1,0 +1,1 @@
+< sort_ex sort | wc -w > outfile #파일이 없으면 파일을 새로 만든다.

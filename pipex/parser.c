@@ -1,6 +1,6 @@
 # include "pipex.h"
 
-char **parse(char *full_cmd, char *file)
+char **parse(char *full_cmd, char *file)//옵션 두개 이상 있는 경우 수정할 필요가 있음
 {
 	char **file_arg;
 	char **cmd_arr;

@@ -3,8 +3,9 @@
 
 int main(void){
         char *arg1="-al";
-        char *arg2="/etc";
+        char *arg2="/etcdss";
         char *file = "ls";
+        char *shell = "/bin/zsh";
         char *argv[]={file,arg1,arg2,NULL};
         char *path = "/bin/ls";
 
