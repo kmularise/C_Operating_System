@@ -6,13 +6,13 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:08:05 by yuikim            #+#    #+#             */
-/*   Updated: 2022/11/19 09:02:36 by yuikim           ###   ########.fr       */
+/*   Updated: 2022/12/30 08:50:17 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*answer;
 	size_t	s1_len;
