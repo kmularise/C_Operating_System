@@ -17,10 +17,14 @@
     - [ ] 시스템 콜 이해하기
 - [ ] PATH 환경 변수 이해하기
 - [ ] 시스템 프로그래밍
-- [ ] pipe 
+- [ ] pipe 통신 공부하기
 ## 확인할 사항
 - 기능 만들 때, malloc과 free는 다른 곳에서 하는 게 좋을 것 같다.
     그 이유는 입력 변수로 stack 영역에 있는 변수와 heap 영역에 있는 변수를 모두 넣을 수 있기 때문에, 함수의 재사용도가 높아지기 때문이다.
 ## 참고자료
 - https://m.blog.naver.com/occidere/220821140420
 - https://80000coding.oopy.io/3c770884-c5f1-4888-a4df-638cb17bdaa8
+- https://dining-developer.tistory.com/13 : gdb 사용법
+- https://iredays.tistory.com/126 : process, thread 실습
+- wait, waitpid https://codingdog.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-waitpid-%ED%95%A8%EC%88%98-%EC%9E%90%EC%8B%9D-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EB%A5%BC-%EA%B8%B0%EB%8B%A4%EB%A6%B0%EB%8B%A4
+- https://www.it-note.kr/133 : waitpid 관련
