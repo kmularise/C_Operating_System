@@ -13,4 +13,9 @@
 #include "libft/ft_strjoin.c"
 #include "libft/ft_strlen.c"
 #include "libft/ft_strdup.c"
+
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+# endif
+
 #endif
