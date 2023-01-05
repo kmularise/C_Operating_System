@@ -41,6 +41,8 @@ char	*find_path(char *cmd, char **paths)
 
 	i = 0;
 	cmd_path = NULL;
+	if (!cmd)
+		(NULL);
 	while (paths[i])
 	{
 		cmd_path = ft_strjoin(paths[i], "/");
@@ -48,8 +50,11 @@ char	*find_path(char *cmd, char **paths)
 		cmd_path = ft_strjoin(cmd_path, cmd);
 		free(temp);
 		if (access(cmd_path, F_OK) == 0)
-			break ;
+			return (cmd_path);
+		free(cmd_path);
 		i++;
 	}
-	return cmd_path;
+	if (access(cmd, F_OK) == 0)
+		return (cmd);
+	return (NULL);
 }
