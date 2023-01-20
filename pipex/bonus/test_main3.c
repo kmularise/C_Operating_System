@@ -68,7 +68,7 @@ void control_pipe(int idx, char **argv, char **envp, int pre_pipes[2])
 		control_cmd_process(idx, argv, envp, pipes, pre_pipes);
 }
 
-int main (int argc, char **argv[], char *envp[])
+int main (int argc, char *argv[], char *envp[])
 {
 	int init[2];
 	if (argc < 5)
