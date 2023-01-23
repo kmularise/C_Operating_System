@@ -13,6 +13,11 @@
 
 #include "../libft/libft.h"
 
+typedef struct	s_setting
+{
+	char **argv;
+	char **envp;
+}	t_setting;
 
 
 int		is_path_env(char *envp);
