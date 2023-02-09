@@ -13,7 +13,7 @@ typedef struct	s_arg {
 	int cmd_count;
 	char *infile;
 	char *outfile;
-	char ***cmds;
+	char **cmds;
 	char **envp;
 	char **paths;
 }	t_arg;
