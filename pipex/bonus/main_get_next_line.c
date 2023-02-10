@@ -147,6 +147,10 @@ int main(int argc, char **argv, char **envp)
     char    *eof;
     pid_t   pid;
     pid_t   pid2;
+    int ret;
+    int ret2;
+    int status;
+    int status2;
 
     t_setting *setting;
 
@@ -154,9 +158,9 @@ int main(int argc, char **argv, char **envp)
 	setting->argv = argv;
 	setting->envp = envp;
 
-    // if (argc != 6)
-    //     show_error("invalid input!");
-    if (/*is_equal(argv[1], "here_doc")*/1)
+    if (argc != 6)
+        show_error("invalid input!");
+    if (is_equal(argv[1], "here_doc"))
     {
         eof = ft_strjoin(argv[2], "\n");
         docs = get_here_docs(eof);
@@ -169,6 +173,7 @@ int main(int argc, char **argv, char **envp)
 		    show_error("child process creation failure!");
         else if (pid == 0)
         {
+            // waitpid(pid, &status, WNOHANG);
             if (pipe(pre_pipes) == -1)
                 show_error("pipe creation failure!");
             pid2 = fork();
@@ -180,10 +185,17 @@ int main(int argc, char **argv, char **envp)
                  control_heredoc_connection(argv, pre_pipes, docs);
             }
             else
+            {
+                waitpid(pid2, &status, WNOHANG);
                 control_mid_connection(3, pre_pipes, next_pipes, setting);
+            }
+        
         }
         else
+        {
+            waitpid(pid, &status, WNOHANG);
             control_last_connection(4, next_pipes, setting->argv, setting->envp);
+        }
     }
     // system("leaks a.out");
     return (0);

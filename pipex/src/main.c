@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "parser.c"
-#include "finder.c"
+// #include "parser.c"
+// #include "finder.c"
 void	memory_leak(void)
 {
 	system("leaks a.out");
@@ -77,9 +77,10 @@ int	do_outfile_process(int pipes[2], char **argv, char **envp)
 int	main(int argc, char *argv[], char *envp[])
 {
 	int		pipes[2];
+	int		status;
 	char	*backup;
 	pid_t	pid;
-
+	int flag = 0;
 	if (argc != 5)
 		show_error("invalid input!");
 	if (pipe(pipes) == -1)
@@ -90,6 +91,31 @@ int	main(int argc, char *argv[], char *envp[])
 	else if (pid == 0)
 		do_infile_process(pipes, argv, envp);
 	else
-		do_outfile_process(pipes, argv, envp);
+	{
+		int ret;
+		while (1)
+		{
+			ret = waitpid(pid, &status, WNOHANG);
+			printf("%d\n", ret);
+			// if (ret == 0)
+			// 	do_outfile_process(pipes, argv, envp);
+			printf("ret : %d\n", WIFEXITED(status));
+			if (ret && !WIFEXITED(status))
+			{
+				printf("abnormal");
+
+				exit(EXIT_FAILURE);
+				// do_outfile_process(pipes, argv, envp);
+			}
+			// if (!flag)
+			if (ret)
+			{
+				flag = 1;
+				do_outfile_process(pipes, argv, envp);
+			}
+		}
+		// waitpid(pid, &status, WNOHANG);
+		// do_outfile_process(pipes, argv, envp);
+	}
 	return (0);
 }
