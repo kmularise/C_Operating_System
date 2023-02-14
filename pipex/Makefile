@@ -19,13 +19,14 @@ SRCS_DIR = ./src/
 BONUS_DIR = ./bonus/
 LIBFT_DIR = ./libft/
 
-SRCS = main.c\
-		finder.c\
-		parser.c
+SRCS = child.c\
+		pipex.c
 SRCS_BONUS = main_bonus.c
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-OBJS = ${SRCS:.c=.o}
+SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
+SRCS_BONUS = $(addprefix $(BONUS_DIR), $(SRCS_BONUS))
+OBJS = ${SRCS_PATH:.c=.o}
 
 all : $(NAME)
 
@@ -40,26 +41,11 @@ re : fclean all
 bonus : $(NAME_BONUS)
 
 $(NAME) : $(OBJS)
-	
+	make -C libft all
+	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
 
 $(NAME_BONUS) : $(OBJS_BONUS)
 	make -C libft all
-	$(CC) $(CFLAGS) 
+	$(CC) $(CFLAGS) $(OBJS_BONUS) libft/libft.a -o $(NAME_BONUS)
 	
-
-# all: make_libft ${NAME}
-# make_libft:
-# 	make -C libft all
-# ${NAME}: ${OBJS}
-# 	cp libft/libft.a src/${NAME}
-# 	ar r $@ $^
-# clean:
-# 	make -C src clean
-# 	make -C libft clean
-# 	rm -rf ${OBJS}
-# fclean : clean
-# 	make -C libft fclean
-# 	rm -rf ${NAME}
-# re : fclean all
-
-# bonus : $
+.PHONY:		all clean fclean bonus re

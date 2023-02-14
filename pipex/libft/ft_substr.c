@@ -6,17 +6,17 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:52:53 by yuikim            #+#    #+#             */
-/*   Updated: 2022/11/25 11:03:01 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:17:38 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, int start, int len)
 {
 	char	*answer;
-	size_t	substr_len;
-	size_t	i;
+	int		substr_len;
+	int		i;
 
 	substr_len = 0;
 	if (start < ft_strlen(s))
