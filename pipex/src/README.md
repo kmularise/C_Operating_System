@@ -1,6 +1,9 @@
 ### 적용해야 할 쿼리 명령어
 ex) < infile ls -l | wc -l > outfile
 
+### 보너스 히어독 양식
+
+
 ### pipex infile fd
 ```c
 pipex.infile = open(argv[1], O_RDONLY);

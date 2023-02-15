@@ -44,7 +44,7 @@ void set_arg(t_arg *arg, int argc, char **argv, char **envps)
         show_error(EXIT_FAILURE, "no such file or directory", argv[1]);
     arg->outfile_fd = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 000644);
     if (arg->outfile_fd < 0)
-        show_error(EXIT_FAILURE, "no such file or directory", argv[3]);
+        show_error(EXIT_FAILURE, "no such file or directory", argv[argc - 1]);
     if (pipe(arg->pipes)< 0)
        show_error(EXIT_FAILURE, "pipe production failure", NULL); 
     arg->paths = get_paths(envps);
