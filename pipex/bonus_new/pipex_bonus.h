@@ -12,9 +12,10 @@ typedef struct	s_arg {
 	int infile_fd;
 	int outfile_fd;
 	int *pipes;
+	int child_idx;
 	int pipe_count;
 	char **paths;
-	pid_t pid[2];
+	pid_t pid;
 	char **cmd_args;
 	char *cmd_path;
 }	t_arg;
