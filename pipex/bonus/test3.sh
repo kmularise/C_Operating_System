@@ -1,1 +1,0 @@
-tr c a << LIMITER | tr b c >> test4

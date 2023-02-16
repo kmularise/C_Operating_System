@@ -6,15 +6,15 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:19:50 by yuikim            #+#    #+#             */
-/*   Updated: 2022/11/09 18:16:51 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:15:50 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(char *s)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (s[i])
