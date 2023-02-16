@@ -13,7 +13,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = pipex
-NAME_BONUS = pipex_bonus
+NAME_BONUS = pipex
 
 SRCS_DIR = ./src/
 BONUS_DIR = ./bonus/
@@ -38,7 +38,7 @@ clean :
 	rm -rf $(OBJS) $(OBJS_BONUS)
 fclean : clean
 	make -C libft fclean
-	rm -rf $(NAME) $(NAME_BONUS)
+	rm -rf $(NAME)
 
 re :
 	make fclean

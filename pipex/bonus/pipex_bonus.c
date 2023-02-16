@@ -20,13 +20,17 @@ void	set_here_doc(t_arg *arg, int argc, char **argv)
 	if (argc != 6)
 		show_error(EXIT_FAILURE, "here_doc invalid input!", NULL);
 	arg->is_here_doc = 1;
-	temp_file_fd = open(".here_doc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 000644);
+	temp_file_fd = open(".here_doc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(0);
-		if (ft_strncmp(line, argv[2], ft_strlen(line) - 1) == 0)
+		write(1, line, ft_strlen(line));
+		if ((ft_strncmp(line, argv[2], ft_strlen(line) - 1) == 0 
+			&& ft_strlen(line) == ft_strlen(argv[2]) + 1))
 			break ;
+		if (!line)
+			exit(EXIT_FAILURE);
 		write(temp_file_fd, line, ft_strlen(line));
 		free(line);
 	}
@@ -34,7 +38,7 @@ void	set_here_doc(t_arg *arg, int argc, char **argv)
 	close(temp_file_fd);
 	arg->infile_fd = open(".here_doc_tmp", O_RDONLY);
 	arg->outfile_fd = open(argv[argc - 1],
-			O_WRONLY | O_CREAT | O_APPEND, 000644);
+			O_WRONLY | O_CREAT | O_APPEND, 0644);
 }
 
 void	set_arg(t_arg *arg, int argc, char **argv, char **envps)
@@ -103,7 +107,7 @@ int	main(int argc, char **argv, char **envps)
 		while (++i < arg.cmd_count)
 			waitpid(arg.pids[i], NULL, 0);
 		if (arg.is_here_doc)
-			delete_here_doc(&arg, envps);
+			unlink(".here_doc_tmp");
 		free_paths(&arg);
 	}
 	return (0);
