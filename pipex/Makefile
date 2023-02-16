@@ -6,7 +6,7 @@
 #    By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 09:24:41 by yuikim            #+#    #+#              #
-#    Updated: 2023/01/05 17:24:10 by yuikim           ###   ########.fr        #
+#    Updated: 2023/02/16 19:33:17 by yuikim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,15 @@ LIBFT_DIR = ./libft/
 
 SRCS = child.c\
 		pipex.c
-SRCS_BONUS = main_bonus.c
+SRCS_BONUS = pipex_bonus.c\
+			child_bonus.c\
+			pipex_utils_bonus.c
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
-SRCS_BONUS = $(addprefix $(BONUS_DIR), $(SRCS_BONUS))
+SRCS_BONUS_PATH = $(addprefix $(BONUS_DIR), $(SRCS_BONUS))
 OBJS = ${SRCS_PATH:.c=.o}
+OBJS_BONUS = ${SRCS_BONUS_PATH:.c=.o}
 
 all : $(NAME)
 
@@ -37,7 +40,9 @@ fclean : clean
 	make -C libft fclean
 	rm -rf $(NAME) $(NAME_BONUS)
 
-re : fclean all
+re :
+	make fclean
+	make all
 bonus : $(NAME_BONUS)
 
 $(NAME) : $(OBJS)
