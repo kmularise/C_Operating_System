@@ -1,1 +1,0 @@
-cc -Wall -Wextra -Werror child_bonus.c pipex_bonus.c pipex_utils_bonus.c ../libft/*.c

@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:14:20 by yuikim            #+#    #+#             */
-/*   Updated: 2023/02/16 20:11:14 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/02/17 21:17:08 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void	set_here_doc(t_arg *arg, int argc, char **argv)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(0);
-		write(1, line, ft_strlen(line));
-		if ((ft_strncmp(line, argv[2], ft_strlen(line) - 1) == 0 
-			&& ft_strlen(line) == ft_strlen(argv[2]) + 1))
+		if (!line || (ft_strncmp(line, argv[2], ft_strlen(line) - 1) == 0
+				&& ft_strlen(line) == ft_strlen(argv[2]) + 1))
 			break ;
 		if (!line)
 			exit(EXIT_FAILURE);
@@ -36,9 +35,6 @@ void	set_here_doc(t_arg *arg, int argc, char **argv)
 	}
 	free(line);
 	close(temp_file_fd);
-	arg->infile_fd = open(".here_doc_tmp", O_RDONLY);
-	arg->outfile_fd = open(argv[argc - 1],
-			O_WRONLY | O_CREAT | O_APPEND, 0644);
 }
 
 void	set_arg(t_arg *arg, int argc, char **argv, char **envps)
@@ -47,11 +43,8 @@ void	set_arg(t_arg *arg, int argc, char **argv, char **envps)
 		set_here_doc(arg, argc, argv);
 	else
 	{
-		arg->outfile_fd = open(argv[argc - 1],
-				O_TRUNC | O_CREAT | O_RDWR, 000644);
-		arg->infile_fd = open(argv[1], O_RDONLY);
-		if (arg->infile_fd < 0)
-			show_error(EXIT_FAILURE, "no such file or directory", argv[1]);
+		if (argc < 5)
+			show_error(EXIT_FAILURE, "invalid input count!", NULL);
 		arg->is_here_doc = 0;
 	}
 	arg->paths = get_paths(envps);

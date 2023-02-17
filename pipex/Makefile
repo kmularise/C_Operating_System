@@ -6,7 +6,7 @@
 #    By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 09:24:41 by yuikim            #+#    #+#              #
-#    Updated: 2023/02/16 19:33:17 by yuikim           ###   ########.fr        #
+#    Updated: 2023/02/17 22:00:35 by yuikim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = child.c\
 		pipex.c
 SRCS_BONUS = pipex_bonus.c\
 			child_bonus.c\
-			pipex_utils_bonus.c
+			pipex_utils_bonus.c\
+			pipex_file_bonus.c
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
@@ -33,24 +34,23 @@ OBJS_BONUS = ${SRCS_BONUS_PATH:.c=.o}
 
 all : $(NAME)
 
+$(NAME) : $(OBJS)
+	make -C libft all
+	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
+
+bonus :	$(OBJS_BONUS)
+	make -C libft all
+	$(CC) $(CFLAGS) $(OBJS_BONUS) libft/libft.a -o $(NAME)
+
 clean :
 	make -C libft clean
 	rm -rf $(OBJS) $(OBJS_BONUS)
 fclean : clean
 	make -C libft fclean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(OBJS) $(OBJS_BONUS)
 
 re :
 	make fclean
 	make all
-bonus : $(NAME_BONUS)
-
-$(NAME) : $(OBJS)
-	make -C libft all
-	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
-
-$(NAME_BONUS) : $(OBJS_BONUS)
-	make -C libft all
-	$(CC) $(CFLAGS) $(OBJS_BONUS) libft/libft.a -o $(NAME_BONUS)
 	
 .PHONY:		all clean fclean bonus re

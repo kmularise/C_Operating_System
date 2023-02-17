@@ -9,7 +9,7 @@ SRCS_B = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast
 OBJS_B = ${SRCS_B:.c=.o}
 
 ifdef WITH_B
-	OBJ_FILES = $(OBJS_B) 
+	OBJ_FILES = $(OBJS) 
 else
 	OBJ_FILES = $(OBJS)
 endif

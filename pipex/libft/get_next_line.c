@@ -6,11 +6,12 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 20:27:48 by yuikim            #+#    #+#             */
-/*   Updated: 2023/02/16 20:29:14 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/02/17 22:03:27 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 t_fd_list	*read_fd_node(t_fd_list *current_fd_node, t_fd_list **head, int fd)
 {

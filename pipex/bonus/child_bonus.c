@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:22:54 by yuikim            #+#    #+#             */
-/*   Updated: 2023/02/16 19:48:15 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/02/17 21:24:23 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ void	execute_child(t_arg arg, char **argv, char **envps)
 	else if (arg.pids[arg.child_idx] == 0)
 	{
 		if (arg.child_idx == 0)
-			child_dup2(arg.infile_fd, arg.pipes[1]);
+			child_dup2(get_infile_fd(&arg, argv), arg.pipes[1]);
 		else if (arg.child_idx == arg.cmd_count -1)
-			child_dup2(arg.pipes[2 * arg.child_idx -2], arg.outfile_fd);
+			child_dup2(arg.pipes[2 * arg.child_idx -2],
+				get_outfile_fd(&arg, argv));
 		else
 			child_dup2(arg.pipes[2 * arg.child_idx - 2],
 				arg.pipes[2 * arg.child_idx + 1]);

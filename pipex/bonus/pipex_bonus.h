@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 19:09:48 by yuikim            #+#    #+#             */
-/*   Updated: 2023/02/16 20:11:49 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/02/17 21:26:18 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*get_cmd_path(char *cmd, char **paths);
 void	set_here_doc(t_arg *arg, int argc, char **argv);
 int		is_parent_process(t_arg arg);
 void	delete_here_doc(t_arg *arg, char **envp);
+int		get_infile_fd(t_arg *arg, char **argv);
+int		get_outfile_fd(t_arg *arg, char **argv);
 
 # define NO_CMD_PATH 0
 # define CMD_PATH 1

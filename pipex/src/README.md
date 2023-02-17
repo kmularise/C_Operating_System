@@ -2,7 +2,7 @@
 ex) < infile ls -l | wc -l > outfile
 
 ### 보너스 히어독 양식
-
+cmd << LIMITER | cmd1 >> file
 
 ### pipex infile fd
 ```c
