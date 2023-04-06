@@ -68,15 +68,20 @@ t_common_resource	*create_common_resource(char *philo_num)
 int	main(int argc, char **argv)
 {
 	pthread_t			*philosophers;//phillsopher - thread 1:1
+	t_setting			setting;
 	// t_thread_info		**info_arr;
 	t_common_resource	*common_resource;
 	int				size;
 	int				thread_id;
 	int				status;
 	long long		count;
+
 	count = 0;
-	// if (argc != 5 && argc != 6)
-	// 	return (0);
+	if (check_valid_input(argc ,argv) == 1)
+		return (0);
+	if (initiate_setting(&setting, argv) == 1)
+		return (0);
+
 	philosophers = create_phillosophers(argv[1]);
 	// info_arr = create_thread_info_arr(argv[1]);
 
@@ -97,10 +102,10 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	// while (i < ft_atoi(argv[1]))
-	// {
-	// 	pthread_join(philosophers[i], (void **)&status);
-	// 	i++;
-	// }
-	// system("leaks a.out");
+	while (i < ft_atoi(argv[1]))
+	{
+		pthread_join(philosophers[i], (void **)&status);
+		i++;
+	}
+	system("leaks a.out");
 }
