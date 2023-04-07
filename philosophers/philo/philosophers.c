@@ -69,12 +69,6 @@ int	main(int argc, char **argv)
 {
 	pthread_t			*philosophers;//phillsopher - thread 1:1
 	t_setting			setting;
-	// t_thread_info		**info_arr;
-	// t_common_resource	*common_resource;
-	// int				size;
-	// int				thread_id;
-	// int				status;
-	// long long		count;
 
 	if (check_valid_input(argc ,argv) == 1)
 		return (0);

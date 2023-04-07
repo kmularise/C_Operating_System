@@ -23,6 +23,12 @@ void	print(t_setting *info, char *str, int philo_idx)
 	pthread_mutex_unlock(&(info->print_mutex));
 }
 
+int	eat_spaghetti(t_setting *info, t_philo *philo)
+{
+	
+	return(0);
+}
+
 int	have_forks(t_setting *info, t_philo *philo) {
 	if (info->forks[philo->idx].state == USED
 		 || info->forks[(philo->idx + 1) % info->philo_num].state == USED)
@@ -35,6 +41,7 @@ int	have_forks(t_setting *info, t_philo *philo) {
 	info->forks[(philo->idx + 1) % (info->philo_num)].state = USED;
 	print(info, "has taken a fork", philo-> idx + 1);
 	// printf("%s has taken a fork", philo->idx);
+	eat_spaghetti(info, philo);
 	pthread_mutex_unlock(&(info->forks[philo->idx].mutex));
 	pthread_mutex_unlock(&(info->forks[(philo->idx + 1)
 			% (info->philo_num)].mutex));
@@ -48,6 +55,16 @@ int	have_forks(t_setting *info, t_philo *philo) {
 	
 // }
 
+void	ft_usleep(int mili_second)
+{
+	long long	time;
+
+	time = timestamp();
+	usleep(mili_second * 900);
+	while (timestamp() < time + mili_second)
+		usleep(20);
+}
+
 void	*execute_philo(void *data)
 {
 	t_philo	*philo;
@@ -60,7 +77,7 @@ void	*execute_philo(void *data)
 		if (have_forks(philo->common_info, philo))
 			break ;
 		print(philo->common_info, "is sleeping", philo->idx);
-		
+		ft_usleep(philo->common_info->time_to_sleep);
 		print(philo->common_info, "is thinking", philo->idx);
 	}
 	// printf("%d\n", philo->idx);
