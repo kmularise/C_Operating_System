@@ -70,42 +70,18 @@ int	main(int argc, char **argv)
 	pthread_t			*philosophers;//phillsopher - thread 1:1
 	t_setting			setting;
 	// t_thread_info		**info_arr;
-	t_common_resource	*common_resource;
-	int				size;
-	int				thread_id;
-	int				status;
-	long long		count;
+	// t_common_resource	*common_resource;
+	// int				size;
+	// int				thread_id;
+	// int				status;
+	// long long		count;
 
-	count = 0;
 	if (check_valid_input(argc ,argv) == 1)
 		return (0);
 	if (initiate_setting(&setting, argv) == 1)
 		return (0);
+	initiate_philos(&setting);
+	//free해주는 함수도 있으면 좋좋을  듯듯!
 
-	philosophers = create_phillosophers(argv[1]);
-	// info_arr = create_thread_info_arr(argv[1]);
-
-	common_resource = create_common_resource(argv[1]);
-	pthread_mutex_t	idx_mutex;
-	int	i;
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-	{
-		// printf("%d\n", i);
-		// printf("info idx : %d\n", info_arr[i]->idx);
-		// pthread_mutex_lock(&idx_mutex);
-		// common_resource->current_idx = i;
-		// pthread_mutex_unlock(&idx_mutex);
-		common_resource->current_idx = i;
-		thread_id = pthread_create(&philosophers[i], NULL, execute_thread_function, (void *)common_resource);
-		pthread_join(philosophers[i], (void **)&status);
-		i++;
-	}
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-	{
-		pthread_join(philosophers[i], (void **)&status);
-		i++;
-	}
-	system("leaks a.out");
+	// system("leaks a.out");
 }

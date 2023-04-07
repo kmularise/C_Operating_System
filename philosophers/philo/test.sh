@@ -1,2 +1,2 @@
 #cc -Wall -Wextra -Werror 
-cc philosophers.c init.c utils.c libft/*.c
+cc thread.c philosophers.c init.c utils.c utils2.c libft/*.c

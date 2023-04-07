@@ -1,65 +1,68 @@
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/07 08:25:18 by yuikim            #+#    #+#             */
+/*   Updated: 2023/04/07 11:31:56 by yuikim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-// 쓰레드 함수
-void *test(void *data)
+
+
+void	print(t_setting *info, char *str, int philo_idx)
 {
-	long long i;
-	i = 100;
-	printf("%lld\n", i);
-	return (void *)(i);
+	pthread_mutex_lock(&(info->print_mutex));
+	if (!(info->dead))
+		printf("%lld %d %s\n", timestamp() - info->time_to_start,
+			philo_idx, str);
+	pthread_mutex_unlock(&(info->print_mutex));
 }
 
-void	*increment_count(long long *count, pthread_mutex_t *count_mutex)
-{
-	pthread_mutex_lock(count_mutex);
-	*count = *count + 1;
-	pthread_mutex_unlock(count_mutex);
-	return ((void *)count);
+int	have_forks(t_setting *info, t_philo *philo) {
+	if (info->forks[philo->idx].state == USED
+		 || info->forks[(philo->idx + 1) % info->philo_num].state == USED)
+		 	return 0;
+	pthread_mutex_lock(&(info->forks[philo->idx].mutex));
+	info->forks[philo->idx].state = USED;
+	print(info, "has taken a fork", philo->idx + 1);
+	pthread_mutex_lock(&(info->forks[(philo->idx + 1)
+			% (info->philo_num)].mutex));
+	info->forks[(philo->idx + 1) % (info->philo_num)].state = USED;
+	print(info, "has taken a fork", philo-> idx + 1);
+	// printf("%s has taken a fork", philo->idx);
+	pthread_mutex_unlock(&(info->forks[philo->idx].mutex));
+	pthread_mutex_unlock(&(info->forks[(philo->idx + 1)
+			% (info->philo_num)].mutex));
+	// if (info->eat)
+	return (1);
 }
 
-long long	get_count(long long *count, pthread_mutex_t *count_mutex)
+// void	sleep_time(t_setting *info)
+// {
+// 	long long	sleep_time;
+	
+// }
+
+void	*execute_philo(void *data)
 {
-	long long	c;
+	t_philo	*philo;
 
-	pthread_mutex_lock(count_mutex);
-	c = *count;
-	pthread_mutex_unlock(count_mutex);
-	return (c);
-}
-
-void	*test2(void *input)
-{
-	t_phillo *temp;
-	temp = (t_phillo *)input;
-	return increment_count(temp->count, temp->count_mutex);
-}
-
-
-int main()
-{
-	long long a = -100;
-	pthread_t thread_t;
-	long long status;
-	pthread_mutex_t	count_mutex;
-	long long 		count;
-	count = 0;
-	for (int j = 0; j < 3; j++)
+	philo = (t_philo *)data;
+	if (philo->idx % 2 == 0)
+		usleep(3000);//데드락 피하기 - 30000정도로 설정해도 될듯 암튼 실험해봤을 때는 가능
+	while (!(philo->common_info->dead))
 	{
-	// 쓰레드를 생성한다. 
-		if (pthread_create(&thread_t, NULL, increment_count, (void *)&a) < 0)
-		{
-			perror("thread create error:");
-			exit(0);
-		}
-		pthread_join(thread_t, (void **)&status);
-		// 쓰레드가 종료되기를 기다린후 
-		// 쓰레드의 리턴값을 출력한다. 
-		// pthread_join(thread_t, (void **)&status);
-		printf("Thread End %lld\n", status);
-	}
-	return 1;
-}
+		if (have_forks(philo->common_info, philo))
+			break ;
+		print(philo->common_info, "is sleeping", philo->idx);
 		
+		print(philo->common_info, "is thinking", philo->idx);
+	}
+	// printf("%d\n", philo->idx);
+	return(NULL);
+}
