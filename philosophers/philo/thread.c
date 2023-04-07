@@ -6,13 +6,21 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 08:25:18 by yuikim            #+#    #+#             */
-/*   Updated: 2023/04/07 11:31:56 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/04/07 13:22:48 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+// void	check_dead(t_setting *setting, t_philo *philo)
+// {
+// 	int	i;
 
+// 	while ()
+// 	{
+		
+// 	}
+// }
 
 void	print(t_setting *info, char *str, int philo_idx)
 {
@@ -23,10 +31,37 @@ void	print(t_setting *info, char *str, int philo_idx)
 	pthread_mutex_unlock(&(info->print_mutex));
 }
 
-int	eat_spaghetti(t_setting *info, t_philo *philo)
+void	eat_spaghetti(t_setting *info)
 {
-	
-	return(0);
+	long long	start_eat;
+	long long	now;
+
+	start_eat = timestamp();
+	while (!info->dead)
+	{
+		now = timestamp();
+		if (now - start_eat >= (long long)(info->time_to_eat))
+			break ;
+		usleep(10);
+	}
+}
+
+void	eat(t_setting *info, t_philo *philo)
+{
+	pthread_mutex_lock(&(info->eat_mutex));
+	print(info, "is eating", philo->idx + 1);
+	philo->start_eat = timestamp();
+	pthread_mutex_unlock(&(info->eat_mutex));
+	(philo->eat_count)++;
+	eat_spaghetti(info);
+	pthread_mutex_lock(&(info->forks[philo->idx].mutex));
+	pthread_mutex_lock(&(info->forks[(philo->idx + 1)
+		% (info->philo_num)].mutex));
+	info->forks[philo->idx].state = AVAILABLE;
+	info->forks[(philo->idx + 1) % (info->philo_num)].state = AVAILABLE;
+	pthread_mutex_unlock(&(info->forks[philo->idx].mutex));
+	pthread_mutex_unlock(&(info->forks[(philo->idx + 1)
+			% (info->philo_num)].mutex));
 }
 
 int	have_forks(t_setting *info, t_philo *philo) {
@@ -40,8 +75,7 @@ int	have_forks(t_setting *info, t_philo *philo) {
 			% (info->philo_num)].mutex));
 	info->forks[(philo->idx + 1) % (info->philo_num)].state = USED;
 	print(info, "has taken a fork", philo-> idx + 1);
-	// printf("%s has taken a fork", philo->idx);
-	eat_spaghetti(info, philo);
+	eat(info, philo);
 	pthread_mutex_unlock(&(info->forks[philo->idx].mutex));
 	pthread_mutex_unlock(&(info->forks[(philo->idx + 1)
 			% (info->philo_num)].mutex));
@@ -61,7 +95,7 @@ void	ft_usleep(int mili_second)
 
 	time = timestamp();
 	usleep(mili_second * 900);
-	while (timestamp() < time + mili_second)
+	while (timestamp() < time + (long long)mili_second)
 		usleep(20);
 }
 
@@ -71,12 +105,12 @@ void	*execute_philo(void *data)
 
 	philo = (t_philo *)data;
 	if (philo->idx % 2 == 0)
-		usleep(3000);//데드락 피하기 - 30000정도로 설정해도 될듯 암튼 실험해봤을 때는 가능
+		usleep(2000);//데드락 피하기 - 30000정도로 설정해도 될듯 암튼 실험해봤을 때는 가능
 	while (!(philo->common_info->dead))
 	{
 		if (have_forks(philo->common_info, philo))
 			break ;
-		print(philo->common_info, "is sleeping", philo->idx);
+		print(philo->common_info, "is sleeping", philo->idx + 1);
 		ft_usleep(philo->common_info->time_to_sleep);
 		print(philo->common_info, "is thinking", philo->idx);
 	}

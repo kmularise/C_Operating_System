@@ -16,7 +16,9 @@ typedef struct s_fork{
 
 typedef struct s_philo{
 	int					idx;
+	int					eat_count;
 	int					last_eat;
+	long long			start_eat;
 	pthread_mutex_t		fork_mutex;
 	pthread_t			thread_id;
 	struct s_setting	*common_info;
