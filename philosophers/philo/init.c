@@ -34,6 +34,8 @@ int	initiate_setting(t_setting *setting, char **argv)
 		if (setting->num_to_eat == 0)
 			return (1);
 	}
+	else
+		setting->num_to_eat = -1;
 	setting->philos = malloc(sizeof(t_philo) * (setting->philo_num));
 	return (0);
 }
