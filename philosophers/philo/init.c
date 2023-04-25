@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/04/07 09:40:49 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:57:37 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	initiate_setting(t_setting *setting, char **argv)
 	pthread_mutex_init(&setting->eat_mutex, NULL);
 	pthread_mutex_init(&setting->print_mutex, NULL);
 	pthread_mutex_init(&setting->stop_mutex, NULL);
+	pthread_mutex_init(&setting->total_eat_mutex, NULL);
+	setting->turn = 0;
+	setting->total_eat = 0;
 	setting->dead = 0;//dead 관련 지표
 	setting->stop_idx = 0;//필요한가?
 	setting->philo_eat = 0;//ㅍㅣㄹ요한가?
@@ -48,6 +51,17 @@ static void	initiate_forks(t_setting *setting)
 	}
 }
 
+// void	check_dead(t_setting *setting, t_philo *philos)
+// {
+// 	int	i;
+// 	long long	now;
+
+// 	while (setting->)
+// 	{
+		
+// 	}
+// }
+
 int	initiate_philos(t_setting *setting)
 {
 	int	i;
@@ -58,8 +72,9 @@ int	initiate_philos(t_setting *setting)
 	while (++i < setting->philo_num)
 	{
 		setting->philos[i].idx = i;
-		setting->philos[i].last_eat = 0;
+		setting->philos[i].last_eat = timestamp();
 		setting->philos[i].common_info = setting;
+		setting->philos[i].eat_count = 0;
 		if (pthread_create(&setting->philos[i].thread_id, NULL, 
 			execute_philo, &setting->philos[i]) != 0)
 			return (1);

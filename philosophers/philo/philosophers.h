@@ -25,6 +25,8 @@ typedef struct s_philo{
 }	t_philo;
 
 typedef struct s_setting{
+	int				turn;
+	int				total_eat;
 	int				philo_num;
 	int				time_to_die;
 	int				time_to_eat;
@@ -40,6 +42,7 @@ typedef struct s_setting{
 	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	total_eat_mutex;
 }	t_setting;
 
 // typedef struct s_philo{

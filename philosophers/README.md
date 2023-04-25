@@ -12,3 +12,13 @@ struct timeval {
 			suseconds_t  tv_usec;  /* and microseconds */
 	};
 ```
+
+### 순서
+eat -> think -> sleep
+think -> sleep
+sleep -> think
+
+### turn을 조정할 필요가 있음
+1 3
+2 4
+1 3
