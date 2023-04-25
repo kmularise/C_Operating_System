@@ -12,3 +12,5 @@ struct timeval {
 			suseconds_t  tv_usec;  /* and microseconds */
 	};
 ```
+
+* timestamp 확인하기

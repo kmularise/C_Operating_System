@@ -16,7 +16,7 @@ long long	timestamp(void)
 {
 	long long		ms_time;
 	struct timeval	standard_time;
-
+	
 	gettimeofday(&standard_time, NULL);
 	ms_time = standard_time.tv_sec * 1000 + standard_time.tv_usec / 1000;
 	return (ms_time);

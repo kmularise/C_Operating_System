@@ -31,6 +31,8 @@ int	initiate_setting(t_setting *setting, char **argv)
 		if (setting->num_to_eat == 0)
 			return (1);
 	}
+	else
+		setting->num_to_eat = -1;
 	setting->philos = malloc(sizeof(t_philo) * (setting->philo_num));
 	return (0);
 }
@@ -58,7 +60,7 @@ int	initiate_philos(t_setting *setting)
 	while (++i < setting->philo_num)
 	{
 		setting->philos[i].idx = i;
-		setting->philos[i].last_eat = 0;
+		setting->philos[i].last_eat = timestamp();
 		setting->philos[i].common_info = setting;
 		if (pthread_create(&setting->philos[i].thread_id, NULL, 
 			execute_philo, &setting->philos[i]) != 0)
