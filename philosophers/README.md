@@ -13,6 +13,7 @@ struct timeval {
 	};
 ```
 
+<<<<<<< HEAD
 ### 순서
 eat -> think -> sleep
 think -> sleep
@@ -22,3 +23,6 @@ sleep -> think
 1 3
 2 4
 1 3
+=======
+* timestamp 확인하기
+>>>>>>> 8032563b692b5b81cee6f5860e225322079ae014
