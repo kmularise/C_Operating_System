@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 08:25:18 by yuikim            #+#    #+#             */
-/*   Updated: 2023/05/29 18:06:14 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/05/31 11:24:36 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	eat(t_setting *info, t_philo *philo)
 		now = timestamp();
 		if (now - philo->start_eat >= (long long)(info->time_to_eat))
 			break ;
-		usleep(10);
+		usleep(1000);
 	}
 	return (0);
 }
@@ -72,7 +72,7 @@ void	ft_usleep(int mili_second, t_philo *philo, t_setting *info)
 	while (now < time + (long long)mili_second)
 	{
 		monitor_dead(info, philo);
-		usleep(10);
+		usleep(1000);
 		now = timestamp();
 	}
 }

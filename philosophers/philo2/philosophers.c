@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:21:45 by yuikim            #+#    #+#             */
-/*   Updated: 2023/05/28 20:51:37 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/05/31 11:10:21 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,12 @@ t_common_resource	*create_common_resource(char *philo_num)
 
 int	main(int argc, char **argv)
 {
-	pthread_t			*philosophers;//phillsopher - thread 1:1
+	pthread_t			*philosophers;
 	t_setting			setting;
 
-	if (check_valid_input(argc ,argv) == 1)
+	if (check_valid_input(argc, argv) == 1)
 		return (0);
 	if (initiate_setting(&setting, argv) == 1)
 		return (0);
 	initiate_philos(&setting);
-	//free해주는 함수도 있으면 좋좋을  듯듯!
-
-	// system("leaks a.out");
 }
