@@ -6,24 +6,23 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:57:30 by yuikim            #+#    #+#             */
-/*   Updated: 2023/05/29 17:56:39 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/01 20:32:09 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include "libft/libft.h"
+# include <pthread.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include "libft/libft.h"
 
-#define AVAILABLE 0
-#define USED 1
+# define AVAILABLE 0
+# define USED 1
 
 typedef struct s_fork{
-	int	state;
-	pthread_mutex_t mutex;
+	pthread_mutex_t	mutex;
 }	t_fork;
 
 typedef struct s_philo{
@@ -40,50 +39,19 @@ typedef struct s_philo{
 }	t_philo;
 
 typedef struct s_setting{
-	int				turn;
-	int				total_eat;
 	int				philo_num;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_to_eat;
-	int				stop;
 	int				dead;
-	int				philo_eat;
 	long long		time_to_start;
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	dead_mutex;
-	pthread_mutex_t	total_eat_mutex;
-	pthread_mutex_t eat_all_mutex;
 }	t_setting;
-
-// typedef struct s_philo{
-// 	int				idx;
-// 	int				last_eat;
-// 	pthread_mutex_t	fork_mutex;
-// 	pthread_t		thread_id;
-// 	t_setting		*common_info;
-// }	t_philo;
-
-// typedef enum e_status{
-
-// }	t_status;
-
-// typedef struct s_phillo{
-// 	pthread_mutex_t	*count_mutex;
-// 	long long		*count;
-// } t_phillo;
-
-//철학자 한명당 정보 담기
-// typedef enum e_status{
-// 	EATING,
-// 	SLEEP,
-// 	WAKEUP,
-// }	t_status;
 
 typedef struct s_thread_info{
 	int	idx;
@@ -107,5 +75,10 @@ void		set_dead(t_setting *info);
 void		monitor_dead(t_setting *info, t_philo *philo);
 int			get_turn(t_setting *info);
 void		print(t_setting *info, char *str, int philo_idx);
+void		set_dead(t_setting *info);
+void		set_done(t_philo *philo);
+void		print(t_setting *info, char *str, int philo_idx);
+void		ft_usleep(int mili_second, t_philo *philo, t_setting *info);
+void		execute_starvation(t_setting *info, t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/05/31 11:24:39 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/01 20:26:53 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ int	initiate_setting(t_setting *setting, char **argv)
 	pthread_mutex_init(&setting->dead_mutex, NULL);
 	pthread_mutex_init(&setting->eat_mutex, NULL);
 	pthread_mutex_init(&setting->print_mutex, NULL);
-	pthread_mutex_init(&setting->stop_mutex, NULL);
-	pthread_mutex_init(&setting->total_eat_mutex, NULL);
-	pthread_mutex_init(&setting->eat_all_mutex, NULL);
 	setting->dead = 0;
 	setting->philo_num = ft_atoi(argv[1]);
 	setting->time_to_die = ft_atoi(argv[2]);
@@ -45,21 +42,7 @@ static void	initiate_forks(t_setting *setting)
 	setting->forks = malloc(sizeof(t_philo) * (setting->philo_num));
 	while (++i < setting->philo_num)
 	{
-		setting->forks[i].state = AVAILABLE;
 		pthread_mutex_init(&(setting->forks[i].mutex), NULL);
-	}
-}
-
-static void stop_philos(t_setting *setting) 
-{
-	int	i;
-
-	i = -1;
-	while (++i < setting->philo_num)
-	{
-		pthread_mutex_lock(&(setting->stop_mutex));
-		setting->philos[i].stop = 1;
-		pthread_mutex_unlock(&(setting->stop_mutex));
 	}
 }
 
@@ -85,12 +68,10 @@ int	is_all_philos_done(t_setting *setting)
 	return (result);
 }
 
-int	initiate_philos(t_setting *setting)
+void	create_philos(t_setting *setting)
 {
 	int	i;
 
-	initiate_forks(setting);
-	setting->time_to_start = timestamp();
 	i = -1;
 	while (++i < setting->philo_num)
 	{
@@ -101,10 +82,18 @@ int	initiate_philos(t_setting *setting)
 		setting->philos[i].stop = 0;
 		setting->philos[i].done = 0;
 		pthread_mutex_init(&setting->philos[i].done_mutex, NULL);
-		if (pthread_create(&setting->philos[i].thread_id, NULL,
-				execute_philo, &setting->philos[i]) != 0)
-			return (1);
+		pthread_create(&setting->philos[i].thread_id, NULL,
+			execute_philo, &setting->philos[i]);
 	}
+}
+
+int	initiate_philos(t_setting *setting)
+{
+	int	i;
+
+	initiate_forks(setting);
+	setting->time_to_start = timestamp();
+	create_philos(setting);
 	while (1)
 	{
 		if (is_all_philos_done(setting))

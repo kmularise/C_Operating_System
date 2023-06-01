@@ -6,27 +6,11 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 08:25:18 by yuikim            #+#    #+#             */
-/*   Updated: 2023/05/31 11:24:36 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/01 20:38:05 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	set_done(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->done_mutex);
-	philo->done = 1;
-	pthread_mutex_unlock(&philo->done_mutex);
-}
-
-void	print(t_setting *info, char *str, int philo_idx)
-{
-	pthread_mutex_lock(&(info->print_mutex));
-	if (!is_dead(info))
-		printf("%lld %d %s\n", timestamp() - info->time_to_start,
-			philo_idx, str);
-	pthread_mutex_unlock(&(info->print_mutex));
-}
 
 int	eat(t_setting *info, t_philo *philo)
 {
@@ -54,27 +38,17 @@ int	have_forks(t_setting *info, t_philo *philo)
 	pthread_mutex_lock(&(info->forks[philo->idx].mutex));
 	print(info, "has taken a fork", philo->idx + 1);
 	pthread_mutex_unlock(&(info->forks[philo->idx].mutex));
+	if (philo->idx == ((philo->idx + 1) % (info->philo_num)))
+	{
+		execute_starvation(info, philo);
+		return (1);
+	}
 	pthread_mutex_lock(&(info->forks[(philo->idx + 1)
 			% (info->philo_num)].mutex));
 	print(info, "has taken a fork", philo-> idx + 1);
 	pthread_mutex_unlock(&(info->forks[(philo->idx + 1)
 			% (info->philo_num)].mutex));
 	return (eat(info, philo));
-}
-
-void	ft_usleep(int mili_second, t_philo *philo, t_setting *info)
-{
-	long long	time;
-	long long	now;
-
-	time = timestamp();
-	now = time;
-	while (now < time + (long long)mili_second)
-	{
-		monitor_dead(info, philo);
-		usleep(1000);
-		now = timestamp();
-	}
 }
 
 int	execute_even_num(t_philo *philo)
@@ -123,7 +97,12 @@ void	*execute_philo(void *data)
 	while (!is_dead(philo->common_info))
 	{
 		monitor_dead(philo->common_info, philo);
-		if (philo->common_info->philo_num % 2 == 0)
+		if (philo->common_info->philo_num == 1)
+		{
+			if (have_forks(philo->common_info, philo))
+				break ;
+		}
+		else if (philo->common_info->philo_num % 2 == 0)
 		{
 			if (execute_even_num(philo))
 				break ;
@@ -134,7 +113,6 @@ void	*execute_philo(void *data)
 				break ;
 		}
 	}
-	// philo->done = 1;
 	set_done(philo);
 	return (NULL);
 }
