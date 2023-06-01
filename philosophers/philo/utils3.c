@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 19:55:36 by yuikim            #+#    #+#             */
-/*   Updated: 2023/04/06 09:58:52 by yuikim           ###   ########.fr       */
+/*   Created: 2023/06/01 20:50:11 by yuikim            #+#    #+#             */
+/*   Updated: 2023/06/01 20:53:27 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philosophers.h"
 
 static	int	check_digit(char ch)
 {
@@ -46,4 +46,28 @@ int	ft_atoi(const char *str)
 	if (num > 2147483647)
 		return (-1);
 	return (sign * num);
+}
+
+int	ft_isdigit(int c)
+{
+	return ('0' <= c && c <= '9');
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
 }
