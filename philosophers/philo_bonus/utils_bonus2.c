@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 21:02:11 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/02 21:10:10 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/05 19:21:55 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void	set_dead(t_philo *philo)
 	sem_post(philo->die);
 }
 
+void	ft_usleep(int mili_second)
+{
+	long long	time;
+	long long	now;
 
+	time = timestamp();
+	now = time;
+	while (now < time + (long long)mili_second)
+	{
+		usleep(1000);
+		now = timestamp();
+	}
+}

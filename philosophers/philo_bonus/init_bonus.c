@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/02 20:12:10 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/05 19:29:54 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ int	create_philos(t_philo *philo)
 			philo->idx = i;
 			break ;
 		}
-		setting->philos[i].start_eat = timestamp();
-		setting->philos[i].common_info = setting;
-		setting->philos[i].eat_count = 0;
-		setting->philos[i].stop = 0;
-		setting->philos[i].done = 0;
+		// setting->philos[i].start_eat = timestamp();
+		// setting->philos[i].common_info = setting;
+		// setting->philos[i].eat_count = 0;
+		// setting->philos[i].stop = 0;
+		// setting->philos[i].done = 0;
 	}
 	if (pid_arr[philo->idx] == 0)
 	{

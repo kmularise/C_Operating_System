@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:57:30 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/02 21:18:34 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/05 19:23:43 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ int			get_turn(t_setting *info);
 void		print(t_philo *philo, char *message);
 void		set_dead(t_setting *info);
 void		set_done(t_philo *philo);
-void		print(t_setting *info, char *str, int philo_idx);
-void		ft_usleep(int mili_second, t_philo *philo, t_setting *info);
+void		ft_usleep(int mili_second);
 void		execute_starvation(t_setting *info, t_philo *philo);
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
