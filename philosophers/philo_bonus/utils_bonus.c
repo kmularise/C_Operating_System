@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:08 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/02 19:53:46 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/06 15:37:36 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ int	check_valid_input(int argc, char **argv)
 	return (0);
 }
 
-void	set_done(t_philo *philo)
+long long	timestamp(void)
 {
-	pthread_mutex_lock(&philo->done_mutex);
-	philo->done = 1;
-	pthread_mutex_unlock(&philo->done_mutex);
+	long long		ms_time;
+	struct timeval	standard_time;
+
+	gettimeofday(&standard_time, NULL);
+	ms_time = standard_time.tv_sec * 1000 + standard_time.tv_usec / 1000;
+	return (ms_time);
 }

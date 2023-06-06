@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 20:13:23 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/05 19:28:48 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/06 22:03:39 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 int	execute_philo(t_philo *philo)
 {
 	philo->eat_count = 0;
-	philo->time_to_start = timestamp();
-	philo->time_to_eat = timestamp();
+	gettimeofday(&philo->start_to_eat, NULL);
 	pthread_create(&(philo->thread_id), NULL, monitor_dead, philo);
 	repeat(philo);
 	return (0);
@@ -24,15 +23,19 @@ int	execute_philo(t_philo *philo)
 
 void	*monitor_dead(void *data)
 {
-	t_philo	*philo;
-	long	now;
+	t_philo		*philo;
+	long long	now;
+	long long	start_eat;
 
 	philo = (t_philo *)data;
 	while (1)
 	{
 		now = timestamp();
 		sem_wait(philo->die);
-		if (now - philo->last_eat > philo->time_to_die) {
+		start_eat = 1000 * philo->start_to_eat.tv_sec
+			+ philo->start_to_eat.tv_usec / 1000;
+		if (now - start_eat > philo->time_to_die)
+		{
 			print(philo, "is dead");
 			exit(1);
 		}
@@ -43,8 +46,10 @@ void	*monitor_dead(void *data)
 
 void	eat(t_philo *philo)
 {
+	sem_wait(philo->die);
+	gettimeofday(&philo->start_to_eat, NULL);
+	sem_post(philo->die);
 	print(philo, "is eating");
-	philo->last_eat = timestamp();
 	ft_usleep(philo->time_to_eat);
 	philo->eat_count++;
 	sem_post(philo->forks);
@@ -53,7 +58,7 @@ void	eat(t_philo *philo)
 
 void	repeat(t_philo *philo)
 {
-	if (philo->idx % 2 == 1) 
+	if (philo->idx % 2 == 1)
 	{
 		usleep(200);
 	}
@@ -81,7 +86,7 @@ int	have_forks(t_philo *philo)
 	}
 	sem_wait(philo->forks);
 	print(philo, "has taken a fork");
-	sem_swait(philo->forks);
+	sem_wait(philo->forks);
 	print(philo, "has taken a fork");
 	return (0);
 }
