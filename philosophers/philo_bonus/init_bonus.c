@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/28 11:25:11 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/28 11:52:55 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,11 @@ void	execute_parent(t_philo *philo, pid_t *pid_arr)
 	}
 }
 
-int	create_philos(t_philo *philo)
+int	make_process(t_philo *philo, pid_t *pid_arr)
 {
-	pid_t	*pid_arr;
-	int		i;
+	int	i;
 
 	i = -1;
-	pid_arr = malloc(philo->philo_num * sizeof(pid_t));
-	philo->time_to_start = timestamp();
 	while (++i < philo->philo_num)
 	{
 		pid_arr[i] = fork();
@@ -82,10 +79,23 @@ int	create_philos(t_philo *philo)
 		else
 			philo->idx = -1;
 	}
+	return (0);
+}
+
+int	create_philos(t_philo *philo)
+{
+	pid_t	*pid_arr;
+	int		i;
+
+	i = -1;
+	pid_arr = malloc(philo->philo_num * sizeof(pid_t));
+	philo->time_to_start = timestamp();
+	if (make_process(philo, pid_arr))
+		return (1);
 	if (philo->idx != -1 && pid_arr[philo->idx] == 0)
 	{
 		execute_philo(philo);
-		return (1);
+		return (0);
 	}
 	else
 		execute_parent(philo, pid_arr);
