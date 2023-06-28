@@ -52,8 +52,8 @@ int main() {
 
     sem_unlink("sem_fork");
     son1.temp = sem_open("sem_fork", O_CREAT, 0644, 1);
-    sem_wait(son1.temp);
-    sem_post(son1.temp);
+    // sem_wait(son1.temp);
+    // sem_post(son1.temp);
 
     for (int i = 0; i < 2; i++) {
         pid_arr[i] = fork();

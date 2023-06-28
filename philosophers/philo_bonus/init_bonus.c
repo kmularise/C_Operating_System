@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/06 22:04:34 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/28 11:25:11 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	execute_parent(t_philo *philo, pid_t *pid_arr)
 			{
 				kill(pid_arr[j], SIGKILL);
 			}
+			break ;
 		}
-		break ;
 	}
 }
 
@@ -85,7 +85,7 @@ int	create_philos(t_philo *philo)
 	if (philo->idx != -1 && pid_arr[philo->idx] == 0)
 	{
 		execute_philo(philo);
-		return (1);	
+		return (1);
 	}
 	else
 		execute_parent(philo, pid_arr);

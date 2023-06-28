@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 20:13:23 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/06 22:03:39 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/07 11:15:02 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void	repeat(t_philo *philo)
 	}
 	while (1)
 	{
-		if (have_forks(philo))
-			break ;
 		if (philo->eat_count == philo->num_to_eat)
 			exit(0);
+		if (have_forks(philo))
+			break ;
 		eat(philo);
 		print(philo, "is sleeping");
 		ft_usleep(philo->time_to_sleep);
