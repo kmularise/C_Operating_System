@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/01 20:26:53 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/29 18:39:56 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	create_philos(t_setting *setting)
 
 void	*execute_monitor_dead(void	*data)
 {
-	t_setting *setting;
-	int	i;
+	t_setting	*setting;
+	int			i;
 
 	setting = (t_setting *)data;
 	while (1)
@@ -107,11 +107,10 @@ void	*execute_monitor_dead(void	*data)
 	return (NULL);
 }
 
-void create_monitor_dead(t_setting *setting)
+void	create_monitor_dead(t_setting *setting)
 {
 	pthread_create(&setting->watch_thread_id, NULL,
 		execute_monitor_dead, setting);
-	
 }
 
 int	initiate_philos(t_setting *setting)

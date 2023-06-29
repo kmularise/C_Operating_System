@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:57:30 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/01 20:56:44 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/29 19:13:41 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 void		ft_putstr_fd(char *s, int fd);
 size_t		ft_strlen(const char *s);
-long long   get_start_eat(t_philo *philo);
-void    	set_start_eat(t_philo *philo);
+long long	get_start_eat(t_philo *philo);
+void		set_start_eat(t_philo *philo);
+int			is_all_philos_done(t_setting *setting);
+int			get_done(t_philo *philo);
 
 #endif

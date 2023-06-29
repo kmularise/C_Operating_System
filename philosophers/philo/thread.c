@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 08:25:18 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/01 20:38:05 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/29 18:32:18 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	eat(t_setting *info, t_philo *philo)
 	}
 	pthread_mutex_unlock(&(info->forks[philo->idx].mutex));
 	pthread_mutex_unlock(&(info->forks[(philo->idx + 1)
-		% (info->philo_num)].mutex));
+			% (info->philo_num)].mutex));
 	pthread_mutex_lock(&(info->eat_mutex));
 	pthread_mutex_unlock(&(info->eat_mutex));
 	return (0);
@@ -59,7 +59,7 @@ int	execute_routine(t_philo *philo, int philo_num)
 	print(philo->common_info, "is sleeping", philo->idx + 1);
 	ft_usleep(philo->common_info->time_to_sleep, philo, philo->common_info);
 	print(philo->common_info, "is thinking", philo->idx + 1);
-	return 0;
+	return (0);
 }
 
 void	*execute_philo(void *data)

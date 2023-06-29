@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:47:09 by yuikim            #+#    #+#             */
-/*   Updated: 2023/05/28 21:10:07 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/06/29 19:13:51 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	monitor_dead(t_setting *info, t_philo *philo)
 {
 	if (timestamp() - get_start_eat(philo) > info->time_to_die)
 	{
-		print(info, "is dead", philo->idx + 1);
+		if (!get_done(philo))
+			print(info, "is dead", philo->idx + 1);
 		set_dead(info);
 	}
 }
