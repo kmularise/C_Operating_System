@@ -23,7 +23,8 @@ SRCS = init.c\
 	thread.c\
 	utils.c\
 	utils2.c\
-	utils3.c
+	utils3.c\
+	utils4.c
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))

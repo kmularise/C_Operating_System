@@ -53,7 +53,7 @@ void	execute_starvation(t_setting *info, t_philo *philo)
 	while (1)
 	{
 		now = timestamp();
-		if (now - philo->start_eat > info->time_to_die)
+		if (now - get_start_eat(philo) > info->time_to_die)
 		{
 			print(info, "is dead", philo->idx + 1);
 			set_dead(info);

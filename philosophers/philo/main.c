@@ -31,7 +31,7 @@ void	set_dead(t_setting *info)
 
 void	monitor_dead(t_setting *info, t_philo *philo)
 {
-	if (timestamp() - philo->start_eat > info->time_to_die)
+	if (timestamp() - get_start_eat(philo) > info->time_to_die)
 	{
 		print(info, "is dead", philo->idx + 1);
 		set_dead(info);

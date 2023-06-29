@@ -34,6 +34,7 @@ typedef struct s_philo{
 	int					done;
 	pthread_mutex_t		fork_mutex;
 	pthread_mutex_t		done_mutex;
+	pthread_mutex_t		start_eat_mutex;
 	pthread_t			thread_id;
 	struct s_setting	*common_info;
 }	t_philo;
@@ -46,6 +47,7 @@ typedef struct s_setting{
 	int				num_to_eat;
 	int				dead;
 	long long		time_to_start;
+	pthread_t		watch_thread_id;
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_mutex_t	print_mutex;
@@ -73,7 +75,6 @@ int			initiate_philos(t_setting *setting);
 int			is_dead(t_setting *info);
 void		set_dead(t_setting *info);
 void		monitor_dead(t_setting *info, t_philo *philo);
-int			get_turn(t_setting *info);
 void		print(t_setting *info, char *str, int philo_idx);
 void		set_dead(t_setting *info);
 void		set_done(t_philo *philo);
@@ -84,4 +85,7 @@ int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 void		ft_putstr_fd(char *s, int fd);
 size_t		ft_strlen(const char *s);
+long long   get_start_eat(t_philo *philo);
+void    	set_start_eat(t_philo *philo);
+
 #endif
