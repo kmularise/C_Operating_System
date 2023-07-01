@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:07:51 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/29 18:39:56 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/07/01 17:35:08 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	initiate_setting(t_setting *setting, char **argv)
 	return (0);
 }
 
-static void	initiate_forks(t_setting *setting)
+void	initiate_forks(t_setting *setting)
 {
 	int	i;
 
@@ -105,36 +105,4 @@ void	*execute_monitor_dead(void	*data)
 			break ;
 	}
 	return (NULL);
-}
-
-void	create_monitor_dead(t_setting *setting)
-{
-	pthread_create(&setting->watch_thread_id, NULL,
-		execute_monitor_dead, setting);
-}
-
-int	initiate_philos(t_setting *setting)
-{
-	int	i;
-
-	initiate_forks(setting);
-	setting->time_to_start = timestamp();
-	create_philos(setting);
-	create_monitor_dead(setting);
-	while (1)
-	{
-		if (is_all_philos_done(setting))
-			break ;
-		if (is_dead(setting))
-			break ;
-	}
-	i = -1;
-	while (++i < setting->philo_num)
-	{
-		if (pthread_join(setting->philos[i].thread_id, NULL) != 0)
-			return (1);
-	}
-	if (pthread_join(setting->watch_thread_id, NULL) != 0)
-		return (1);
-	return (0);
 }

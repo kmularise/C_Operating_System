@@ -6,7 +6,7 @@
 #    By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 09:24:41 by yuikim            #+#    #+#              #
-#    Updated: 2023/06/01 20:58:29 by yuikim           ###   ########.fr        #
+#    Updated: 2023/07/01 17:24:17 by yuikim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS_DIR = ./
 LIBFT_DIR = ./libft/
 
 SRCS = init.c\
+	init2.c\
 	main.c\
 	philosophers.c\
 	thread.c\

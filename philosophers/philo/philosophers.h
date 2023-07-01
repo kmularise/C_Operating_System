@@ -6,7 +6,7 @@
 /*   By: yuikim <yuikim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:57:30 by yuikim            #+#    #+#             */
-/*   Updated: 2023/06/29 19:13:41 by yuikim           ###   ########.fr       */
+/*   Updated: 2023/07/01 17:27:20 by yuikim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,8 @@ long long	get_start_eat(t_philo *philo);
 void		set_start_eat(t_philo *philo);
 int			is_all_philos_done(t_setting *setting);
 int			get_done(t_philo *philo);
+void		*execute_monitor_dead(void	*data);
+void		initiate_forks(t_setting *setting);
+void		create_philos(t_setting *setting);
 
 #endif
